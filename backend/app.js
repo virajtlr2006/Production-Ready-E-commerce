@@ -1,12 +1,15 @@
 import express from "express"
 import adminAuthRouter from "./routes/authRoutes.js"
+import cors from "cors"
 
 const app = express()
 
 // Parse json 
 app.use(express.json())
 
-const port = 3000
+app.use(cors())
+
+const port = 8080
 
 app.get("/",(req,res) => {
     res.send("Hello World!")

@@ -11,7 +11,7 @@ router.post("/signup", async (req, res) => {
 
     // Get data from body
     const { email, password, name } = req.body
-
+    
     // insert data into db
     try {
         await db.insert(adminTable).values({ email, password, name })
@@ -23,7 +23,7 @@ router.post("/signup", async (req, res) => {
     } catch (error) {
         // Unsuccessful signup
         res.status(400).json(
-            { "message": error }
+            { "message": "Please Login First" }
         )
     }
 })
@@ -49,7 +49,7 @@ router.post("/signin", async (req, res) => {
 
         // If no email in db 
         if (CheckAdmin.length == 0) {
-            res.status(200).json(
+            res.status(400).json(
                 { "message": "Please SignUp First" }
             )
         }
@@ -60,12 +60,12 @@ router.post("/signin", async (req, res) => {
         }
         // If wrong then show this esponse
         else {
-            res.status(400).json({ "message": "Wrong Password" })
+            res.status(400).json({ "message": "Incorrect Password" })
         }
     } catch (error) {
         // If unexpected error occurs
         res.status(400).json(
-            { "message": error }
+            { "message": "Incorrect Password" }
         )
     }
 })
