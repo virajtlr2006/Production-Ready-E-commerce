@@ -1,5 +1,6 @@
 import express from "express"
 import adminAuthRouter from "./routes/authRoutes.js"
+import userAuthRouter from "./routes/userRoutes.js"
 import cors from "cors"
 
 const app = express()
@@ -31,3 +32,4 @@ app.post("/post",(req,res) => {
 })
 
 app.use("/admin",adminAuthRouter)
+app.use("/users",userAuthRouter)
