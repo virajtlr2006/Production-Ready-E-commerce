@@ -1,5 +1,5 @@
 import express from "express"
-import { adminTable } from "../db/schema.js"
+import { adminTable, UserTable } from "../db/schema.js"
 import { db } from "../index.js"
 import { eq } from "drizzle-orm"
 import { Check } from "drizzle-orm/gel-core"
@@ -11,7 +11,7 @@ router.post("/signup", async (req, res) => {
 
     // Get data from body
     const { email, password, name } = req.body
-    
+
     // insert data into db
     try {
         await db.insert(adminTable).values({ email, password, name })
@@ -98,10 +98,58 @@ router.post("/newpass", async (req, res) => {
     } catch (error) {
         // Gives this response if unexpected error occured
         res.status(400).json(
-            {"message":"Unexpected error occured"}
+            { "message": "Unexpected error occured" }
         )
     }
 }
 )
 
+// All Users List from usertable
+router.get("/allusers", async (req, res) => {
+
+    try {
+        // Fetch all users from the UserTable
+        const FetchUsers = await db.select().from(UserTable)
+        // console.log(FetchUsers)
+
+        // If users are present then show this response
+        if (FetchUsers.length > 0) {
+            res.status(200).json(
+                { "Users": FetchUsers }
+            )
+        }
+        // If no users are present then show this response
+        if (FetchUsers.length == 0) {
+            res.status(400).json(
+                { "message": "No Users" }
+            )
+        }
+    } catch (error) {
+        // If unexpected error occurs
+        res.status(400).json(
+            { "message": "Error Occured" }
+        )
+    }
+
+})
+
+// Delete User by id
+router.delete("/deleteuser/:id", async (req, res) => {
+    const { id } = req.params
+
+    try {
+        // Delete user from UserTable where id matches
+        await db.delete(UserTable).where(eq(UserTable.id, Number(id)))
+
+        // Response after successful deletion
+        res.status(200).json(
+            { "message": "User Deleted Successfully" }
+        )
+    } catch (error) {
+        // If unexpected error occurs
+        res.status(400).json(
+            { "message": "Error Occured" }
+        )
+    }
+})
 export default router

@@ -7,6 +7,7 @@ import { useForm, SubmitHandler } from "react-hook-form"
 
 // Define the Users interface
 export interface Users {
+    id:number,
     email: string,
     password: string,
     username: string,
