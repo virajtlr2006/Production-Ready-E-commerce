@@ -40,6 +40,10 @@ const page = () => {
             console.log(error)
         }
     }
+
+    const UpdatePassword = async () => {
+        router.push("/users/updatePass")
+    }
     return (
         <div>
             {/* Profile details */}
@@ -49,6 +53,7 @@ const page = () => {
                 <p>{profile.email}</p>
                 <p>{profile.username}</p>
                 <p>{profile.phone_no}</p>
+                <button onClick={() => UpdatePassword()}>Update Password</button>
             </div>
             }
         </div>

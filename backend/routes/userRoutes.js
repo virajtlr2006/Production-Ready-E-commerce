@@ -11,7 +11,7 @@ router.post("/signup", async (req, res) => {
     // Get user details from body
     const { username, email, phone_no, password } = req.body
 
-    console.log(username, email, phone_no, password)
+    // console.log(username, email, phone_no, password)
     try {
         const CheckUser = await db.select().from(UserTable).where(eq(UserTable.email, email))
 
@@ -151,5 +151,44 @@ router.post("/profile/edit", async (req, res) => {
         )
     }
 })
+
+// Update User's Password
+router.post("/newpass", async (req, res) => {
+    // Take inputs from body
+    const { password, oldPassword, email } = req.body
+
+    // Check all inputs filled or not
+    if(!oldPassword || !password){
+        res.status(400).json(
+            {"message":"Fill all required fields"}
+        )
+    }
+
+    try {
+        // Checks user in db through email
+        const CheckPassword = await db.select().from(UserTable).where(eq(UserTable.email, email))
+
+        // If old password and new password matches then update password
+        if (CheckPassword[0].password === oldPassword) {
+            const newPassword = await db.update(UserTable).set({ password }).where(eq(UserTable.email, email)).returning()
+
+            // Then this response is sent
+            res.status(200).json(
+                { "message": "Password Updated Successfully" }
+            )
+        }
+        else {
+            // If old password is incorrect in body
+            res.status(400).json(
+                { "message": "Incorrect Old Password" }
+            )
+        }
+    } catch (error) {
+        // Gives this response if unexpected error occured
+        res.status(400).json(
+            { "message": "Internal Server Error" }
+        )
+    }
+})      
 
 export default router
