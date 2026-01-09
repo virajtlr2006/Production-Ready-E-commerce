@@ -11,6 +11,7 @@ router.post("/signup", async (req, res) => {
     // Get user details from body
     const { username, email, phone_no, password } = req.body
 
+    console.log(username, email, phone_no, password)
     try {
         const CheckUser = await db.select().from(UserTable).where(eq(UserTable.email, email))
 
@@ -29,6 +30,7 @@ router.post("/signup", async (req, res) => {
         }
     } catch (error) {
         // If User not created pass this response
+        // console.log(error)
         res.status(400).json(
             { "message": "Internal Server Error" }
         )
@@ -84,6 +86,12 @@ router.post("/signin", async (req, res) => {
 router.post("/profile", async (req, res) => {
     const { email } = req.body
     // console.log(email)
+
+    if(!email){
+        res.status(400).json(
+            {"message":"Email not found"}
+        )
+    }
 
     try {
         // Checks the user in db through email

@@ -34,9 +34,9 @@ const page = () => {
                 "email": data.email,
                 "password": data.password,
             })
-            router.push("/login")
+            router.push("/admin/login")
         } catch (error: any) {
-            seterrormsg(error.response.data.message)
+            console.log(error.response.data.message)
         }
 
     }
@@ -49,10 +49,10 @@ const page = () => {
                 <input placeholder="name" {...register("name", { required: true })} />
                 {errors.name && <span>This field is required</span>}
 
-                <input placeholder="email"  {...register("email", { required: true })} />
+                <input type="email" placeholder="email"  {...register("email", { required: true })} />
                 {errors.email && <span>This field is required</span>}
 
-                <input placeholder="password" {...register("password", { required: true })} />
+                <input type="password" placeholder="password" {...register("password", { required: true })} />
                 {errors.password && <span>This field is required</span>}
 
                 <input type="submit" />
