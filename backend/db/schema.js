@@ -19,3 +19,15 @@ export const UserTable = pgTable("users", {
   phone_no : bigint().notNull(),
   profile_pic : varchar().default("https://imgs.search.brave.com/pkPyTQFTOVFQw7Hki6hg6cgY5FPZ3UzkpUMsnfiuznQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/dmVjdG9yc3RvY2su/Y29tL2kvNTAwcC80/MS85MC9hdmF0YXIt/ZGVmYXVsdC11c2Vy/LXByb2ZpbGUtaWNv/bi1zaW1wbGUtZmxh/dC12ZWN0b3ItNTcy/MzQxOTAuanBn"),
 })
+
+export const ProductTable = pgTable("products", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  email: varchar().notNull(),
+  category: varchar().notNull(),
+  p_name: varchar().notNull(),
+  description: varchar().notNull(),
+  price: integer().notNull(),
+  image_url: varchar().notNull(),
+  stock: integer().notNull(),
+  isApproved:boolean().default(false),
+});
