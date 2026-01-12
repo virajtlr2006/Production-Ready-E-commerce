@@ -50,6 +50,7 @@ const page = () => {
                     <p>{u.description}</p>
                     <p>{u.price}</p>
                     <p>{u.stock}</p>
+                    <p>Status : {u.isApproved ? "Approved" : "Pending"}</p>
                 </div>
             )}
             {errormsg && <p>{errormsg}</p>}
