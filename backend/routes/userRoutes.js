@@ -1,6 +1,6 @@
 import express from "express"
 import { db } from "../index.js"
-import { UserTable } from "../db/schema.js"
+import { ProductTable, UserTable } from "../db/schema.js"
 import { eq } from "drizzle-orm"
 
 const router = express.Router()
@@ -87,9 +87,9 @@ router.post("/profile", async (req, res) => {
     const { email } = req.body
     // console.log(email)
 
-    if(!email){
+    if (!email) {
         res.status(400).json(
-            {"message":"Email not found"}
+            { "message": "Email not found" }
         )
     }
 
@@ -147,7 +147,7 @@ router.post("/profile/edit", async (req, res) => {
     } catch (error) {
         // If there is internal server error
         res.status(400).json(
-            {"message":"Internal Server Error"}
+            { "message": "Internal Server Error" }
         )
     }
 })
@@ -158,9 +158,9 @@ router.post("/newpass", async (req, res) => {
     const { password, oldPassword, email } = req.body
 
     // Check all inputs filled or not
-    if(!oldPassword || !password){
+    if (!oldPassword || !password) {
         res.status(400).json(
-            {"message":"Fill all required fields"}
+            { "message": "Fill all required fields" }
         )
     }
 
@@ -189,6 +189,57 @@ router.post("/newpass", async (req, res) => {
             { "message": "Internal Server Error" }
         )
     }
-})      
+})
+
+// User All Products
+router.post("/userproducts", async (req, res) => {
+    // Take email from body
+    const { email } = req.body
+    // console.log(email)
+
+    // If email not found in body
+    if (!email) {
+        req.status(400).json(
+            // Send this response
+            { "message": "Email not found" }
+        )
+    }
+
+    try {
+        // Check user in db through email
+        const CheckUser = await db.select().from(UserTable).where(eq(UserTable.email, email))
+        // console.log(CheckUser)
+
+        // If no user found then send this response
+        if (CheckUser.length == 0) {
+            res.status(400).json(
+                { "message": "Please Login First" }
+            )
+        }
+        else {
+            // If user found then fetch all products of that user through email
+            const userProducts = await db.select().from(ProductTable).where(eq(ProductTable.email, email))
+            // console.log(userProducts.length)
+
+            // If no products found for that user then send this response
+            if (userProducts.length == 0) {
+                res.status(400).json(
+                    { "message": "No User Found" }
+                )
+            }
+            else {
+                // If products found then send all products in response 
+                res.status(200).json(
+                    { "userproducts": userProducts }
+                )
+            }
+        }
+    } catch (error) {
+        // If unexpected error occured then send this response
+        req.status.json(
+            {"message":"Unexpected Error Occured...Please try again"}
+        )
+    }
+})
 
 export default router
