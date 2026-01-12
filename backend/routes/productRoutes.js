@@ -36,6 +36,8 @@ router.post("/newproducts", async (req, res) => {
 
 // Get all products
 router.get("/allproducts", async (req, res) => {
+
+    const {id} = req.params
     try {
         // Fetch all products from the database
         const allProducts = await db.select().from(ProductTable)
@@ -181,4 +183,36 @@ router.post("/approvedproducts", async (req, res) => {
     }
 })
 
+// Single Product Details
+router.post("/productdetails/:id", async (req, res) => {
+    // Extract product ID from request params
+    const { id } = req.params
+    // console.log(id)
+
+    try {
+        // Fetch product details from the database where ID matches
+        const ProductDetails = await db.select().from(ProductTable).where(eq(ProductTable.id, Number(id)))
+        // console.log(ProductDetails)
+
+        // Check if product is found and send response
+        if (ProductDetails.length > 0) {
+            // Send response with product details
+            res.status(200).json(
+                { "ProductDetails": ProductDetails }
+            )
+        }
+
+        // If no product found, send this message
+        if (ProductDetails.length == 0) {
+            res.status(200).json(
+                { "message": "Product Not Found" }
+            )
+        }
+    } catch (error) {
+        // Handle errors and send error response
+        res.status(400).json(
+            { "message": "Internal Server Error..Please Try Again" }
+        )
+    }
+})
 export default router

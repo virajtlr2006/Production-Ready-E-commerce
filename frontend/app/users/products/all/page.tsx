@@ -3,6 +3,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Products } from '../new/page'
+import { useParams } from 'next/navigation'
 
 const page = () => {
 
@@ -28,10 +29,11 @@ const page = () => {
       <div>
         {allProducts && allProducts.map((product) => (
           <div className='border-4 mt-5' key={product.id}>
+            <a href={`/users/products/${product.id}`}>
             <img src={product.image_url} alt={product.p_name}/>
             <h2>{product.p_name}</h2>
             <p >Price: ${product.price}</p>
-            <p >Stock: {product.stock}</p>
+            </a>
           </div>
         ))}
       </div>    

@@ -55,16 +55,19 @@ const page = () => {
     const EditProduct = async (id:number) => {
         await router.push(`/users/products/edit/${id}`)
     }
+
     return (
         <div>
             {userproducts && userproducts.map((u) =>
                 <div key={u.id}>
+                    <a href={`/users/products/${u.id}`}>
                     <img src={u.image_url} />
                     <p>{u.category}</p>
                     <p>{u.p_name}</p>
                     <p>{u.description}</p>
                     <p>{u.price}</p>
                     <p>{u.stock}</p>
+                    </a>
                     <p>Status : {u.isApproved ? "Approved" : "Pending"}</p>
                     <Trash2 onClick={() => DeleteProduct(u.id)}/>
                     <Edit2 onClick={() => EditProduct(u.id)}/>

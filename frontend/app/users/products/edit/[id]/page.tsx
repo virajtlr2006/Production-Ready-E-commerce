@@ -4,6 +4,7 @@ import { Products } from '../../new/page'
 import axios from 'axios'
 import { useForm } from "react-hook-form"
 import { useParams, useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 
 const page = () => {
@@ -19,6 +20,18 @@ const page = () => {
         reset,
         formState: { errors },
     } = useForm<Products>()
+
+    useEffect(() => {
+        FetchOldProduct()
+    }, [])
+    
+
+    const FetchOldProduct = async () => {
+
+        const response = await axios.post(`http://localhost:8080/products/productdetails/${id}`)
+
+        reset(response.data.ProductDetails[0])
+    }
 
     const EditProduct = async (data:Products) => {
         const response = await axios.post(`http://localhost:8080/products/editproduct/${id}`,data)
