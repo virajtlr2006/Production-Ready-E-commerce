@@ -59,11 +59,20 @@ const page = () => {
     const FetchProduct = async () => {
         try {
             const response = await axios.post(API_ENDPOINTS.PRODUCT_DETAILS(String(id)))
-            setproduct(response.data.ProductDetails[0])
-            const price = typeof response.data.ProductDetails[0].price === 'string' 
-                ? parseFloat(response.data.ProductDetails[0].price) 
-                : response.data.ProductDetails[0].price
-            setTotalPrice(price)
+            const productData = response.data.ProductDetails[0]
+            
+            // Handle both 'price' and 'amount' field names
+            const priceValue = productData.price || productData.amount
+            const price = typeof priceValue === 'string' 
+                ? parseFloat(priceValue) 
+                : priceValue
+            
+            // Set product with amount field for consistency
+            setproduct({
+                ...productData,
+                amount: price
+            })
+            setTotalPrice(price || 0)
             setLoading(false)
         } catch (error) {
             console.error('Error fetching product:', error)
