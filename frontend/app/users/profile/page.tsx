@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Users } from '../signup/page'
 import { User, Mail, Phone, Lock, Edit2, LogOut, Loader2 } from 'lucide-react'
+import { API_ENDPOINTS } from '@/lib/api'
 
 const page = () => {
     // Use useEffect to fetch profile data
@@ -34,7 +35,7 @@ const page = () => {
             }
 
             // Make API call to fetch profile data
-            const response = await axios.post("http://localhost:8080/users/profile", { email })
+            const response = await axios.post(API_ENDPOINTS.USER_PROFILE, { email })
             setProfile(response.data.profile)
         } catch (error: any) {
             setError(error.response?.data?.message || 'Failed to load profile')

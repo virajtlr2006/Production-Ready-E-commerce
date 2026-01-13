@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form"
 import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Edit3, Save, X } from 'lucide-react'
+import { API_ENDPOINTS } from '@/lib/api'
 
 const page = () => {
     const { id } = useParams()
@@ -27,7 +28,7 @@ const page = () => {
 
     const FetchOldProduct = async () => {
         try {
-            const response = await axios.post(`http://localhost:8080/products/productdetails/${id}`)
+            const response = await axios.post(API_ENDPOINTS.PRODUCT_DETAILS(String(id)))
             reset(response.data.ProductDetails[0])
         } catch (error) {
             console.error('Error fetching product:', error)
@@ -41,7 +42,7 @@ const page = () => {
             setErrorMessage('')
             setSuccessMessage('')
 
-            await axios.post(`http://localhost:8080/products/editproduct/${id}`, data)
+            await axios.post(API_ENDPOINTS.EDIT_PRODUCT(String(id)), data)
             setSuccessMessage('Product updated successfully!')
 
             setTimeout(() => {

@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Lock, Loader2 } from "lucide-react"
 import Link from "next/link"
+import { API_ENDPOINTS } from "@/lib/api"
 
 // Type for user login data
 export interface User {
@@ -33,7 +34,7 @@ const page = () => {
       setErrormsg(null)
 
       // API call to login and data sending
-      await axios.post('http://localhost:8080/users/signin', data)
+      await axios.post(API_ENDPOINTS.USER_SIGNIN, data)
 
       // Store user email in local storage
       localStorage.setItem('useremail', data.email)

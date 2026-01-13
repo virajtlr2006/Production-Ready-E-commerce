@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form"
 import { Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { API_ENDPOINTS } from "@/lib/api"
 
 // Define the Users interface
 export interface Users {
@@ -39,7 +40,7 @@ const page = () => {
             setErrormsg(null)
 
             // API call to sign up and data sending
-            await axios.post("http://localhost:8080/users/signup", data)
+            await axios.post(API_ENDPOINTS.USER_SIGNUP, data)
             // On success, redirect to login page
             router.push("/users/login")
         } catch (error: any) {

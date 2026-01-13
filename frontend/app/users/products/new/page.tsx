@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form"
 import { Plus, X, Check, AlertCircle, Upload } from "lucide-react";
+import { API_ENDPOINTS } from "@/lib/api";
 
 //  Define the Products interface
 export interface Products {
@@ -62,7 +63,7 @@ const page = () => {
             const newdata = { ...data, email }
 
             // Make POST request to create new product
-            await axios.post("http://localhost:8080/products/newproducts", newdata);
+            await axios.post(API_ENDPOINTS.NEW_PRODUCT, newdata);
 
             setSuccessMessage('Product created successfully!')
 

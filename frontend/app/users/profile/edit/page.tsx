@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form"
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { User, Phone, Image, ArrowLeft, Check, AlertCircle, Loader2, Save } from 'lucide-react'
+import { API_ENDPOINTS } from '@/lib/api'
 
 const page = () => {
     const router = useRouter()
@@ -47,7 +48,7 @@ const page = () => {
         }
 
         try {
-            const oldprofile = await axios.post("http://localhost:8080/users/profile", { email })
+            const oldprofile = await axios.post(API_ENDPOINTS.USER_PROFILE, { email })
             reset(oldprofile.data.profile)
             if (oldprofile.data.profile.profile_pic) {
                 setProfilePicPreview(oldprofile.data.profile.profile_pic)
@@ -64,7 +65,7 @@ const page = () => {
             setErrorMsg(null)
             setSuccessMsg(null)
 
-            await axios.post("http://localhost:8080/users/profile/edit", data)
+            await axios.post(API_ENDPOINTS.USER_PROFILE_EDIT, data)
             setSuccessMsg("Profile updated successfully!")
 
             setTimeout(() => {

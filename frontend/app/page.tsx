@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { ShoppingCart, Zap, Heart, Truck, RotateCcw, Award, ChevronRight, Star, Tag } from "lucide-react"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import { API_ENDPOINTS } from "@/lib/api"
 
 interface Product {
   id: number
@@ -26,7 +27,7 @@ export default function Home() {
 
   const fetchFeaturedProducts = async () => {
     try {
-      const response = await axios.post("http://localhost:8080/products/approvedproducts")
+      const response = await axios.post(API_ENDPOINTS.APPROVED_PRODUCTS)
       setFeaturedProducts(response.data.Approvedproducts.slice(0, 4))
     } catch (error) {
       console.error("Failed to fetch products:", error)

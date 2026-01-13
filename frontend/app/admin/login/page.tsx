@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ShieldCheck, Loader2, Lock } from "lucide-react"
 import Link from "next/link"
+import { API_ENDPOINTS } from "@/lib/api"
 
 export interface Admin {
     email: string,
@@ -31,7 +32,7 @@ const page = () => {
     const signIn = async (data: Admin) => {
         try {
             setLoading(true)
-            const response = await axios.post("http://localhost:8080/admin/signin", {
+            const response = await axios.post(API_ENDPOINTS.ADMIN_SIGNIN, {
                 "email": data.email,
                 "password": data.password,
             })

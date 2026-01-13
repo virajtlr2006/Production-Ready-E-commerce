@@ -13,6 +13,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Check, X, Package, ShieldCheck, Search, Loader2, Eye } from 'lucide-react'
+import { API_ENDPOINTS } from '@/lib/api'
 import {
     Dialog,
     DialogContent,
@@ -66,7 +67,7 @@ const page = () => {
     const FetchAllProducts = async () => {
         try {
             setLoading(true)
-            const response = await axios.get("http://localhost:8080/products/allproducts")
+            const response = await axios.get(API_ENDPOINTS.ALL_PRODUCTS)
             setAllProducts(response.data.Allproducts)
         } catch (error) {
             console.log(error)
@@ -77,13 +78,13 @@ const page = () => {
 
     // Function to approve a product
     const ApproveProduct = async (id:number) => {
-        await axios.post(`http://localhost:8080/products/approveproduct/${id}`)
+        await axios.post(API_ENDPOINTS.APPROVE_PRODUCT(id))
         FetchAllProducts()
     }
 
     // Function to reject a product
     const RejectProduct = async (id:number) => {
-        await axios.post(`http://localhost:8080/products/rejectproduct/${id}`)
+        await axios.post(API_ENDPOINTS.REJECT_PRODUCT(id))
         FetchAllProducts()
     }
 

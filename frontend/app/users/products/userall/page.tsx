@@ -8,6 +8,7 @@ import { Edit2, Trash2, Package, Loader2, AlertCircle, CheckCircle2, Clock, Plus
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { API_ENDPOINTS } from '@/lib/api'
 import {
   Dialog,
   DialogContent,
@@ -44,7 +45,7 @@ const page = () => {
                 return false
             }
             // Make POST request to fetch user products
-            const response = await axios.post("http://localhost:8080/users/userproducts", { email })
+            const response = await axios.post(API_ENDPOINTS.USER_PRODUCTS, { email })
             // Set the fetched products to state
             setUserproducts(response.data.userproducts)
         } catch (error: any) {
@@ -58,7 +59,7 @@ const page = () => {
     // Delete User Product
     const DeleteProduct = async (id: number) => {
         try {
-            await axios.delete(`http://localhost:8080/products/deleteproduct/${id}`)
+            await axios.delete(API_ENDPOINTS.DELETE_PRODUCT(id))
             FetchUserProducts()
             setDeleteDialog(null)
         } catch (error: any) {

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Lock, Eye, EyeOff, ArrowLeft, Check, AlertCircle, Loader2, Shield } from 'lucide-react'
+import { API_ENDPOINTS } from '@/lib/api'
 
 // Type for updating password
 export interface UpdatePass {
@@ -49,7 +50,7 @@ const page = () => {
             }
 
             // Make API call to update password
-            await axios.post("http://localhost:8080/users/newpass", {
+            await axios.post(API_ENDPOINTS.USER_CHANGE_PASSWORD, {
                 email,
                 oldPassword: data.oldPassword,
                 password: data.newPassword

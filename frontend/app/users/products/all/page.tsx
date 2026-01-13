@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Package, ShoppingCart, Loader2, AlertCircle, ChevronDown, ChevronRight, SlidersHorizontal, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { API_ENDPOINTS } from '@/lib/api'
 
 const page = () => {
 
@@ -32,7 +33,7 @@ const page = () => {
   const ApprovedProducts = async () => {
     try {
       setLoading(true)
-      const response = await axios.post("http://localhost:8080/products/approvedproducts")
+      const response = await axios.post(API_ENDPOINTS.APPROVED_PRODUCTS)
       const products = response.data.Approvedproducts
       setAllProducts(products)
       

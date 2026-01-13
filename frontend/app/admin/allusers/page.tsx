@@ -13,6 +13,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { DeleteIcon, Trash2 } from 'lucide-react'
+import { API_ENDPOINTS } from '@/lib/api'
 
 const page = () => {
 
@@ -27,7 +28,7 @@ const page = () => {
     const FetchAllUsers = async () => {
         // console.log("Fetching all users")
         // GET request to fetch all users
-        const response = await axios.get("http://localhost:8080/admin/allusers")
+        const response = await axios.get(API_ENDPOINTS.ADMIN_ALL_USERS)
         // console.log(response.data.Users)
         // Set the fetched users into state
         setAllusers(response.data.Users)
@@ -36,7 +37,7 @@ const page = () => {
     const DeleteUser = async (id: number) => {
         // console.log(id)
         // DELETE request to delete user by id
-        await axios.delete(`http://localhost:8080/admin/deleteuser/${id}`)
+        await axios.delete(API_ENDPOINTS.DELETE_USER(id))
         // Refresh the user list after deletion
         FetchAllUsers()
     }

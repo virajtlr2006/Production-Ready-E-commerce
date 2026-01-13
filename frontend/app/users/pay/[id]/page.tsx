@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { Products } from '../../products/new/page';
 import axios from 'axios';
 import { useForm } from "react-hook-form"
+import { API_ENDPOINTS } from '@/lib/api'
 
 
 export interface Payment {
@@ -47,7 +48,7 @@ const page = () => {
 
 
     const FetchProduct = async () => {
-        const response = await axios.post(`http://localhost:8080/products/productdetails/${id}`)
+        const response = await axios.post(API_ENDPOINTS.PRODUCT_DETAILS(String(id)))
         // console.log(response.data.ProductDetails[0]);
         
         setproduct(response.data.ProductDetails[0])
@@ -56,7 +57,7 @@ const page = () => {
 
     const Pay = async (data:Payment) => {
         const email = localStorage.getItem("useremail")
-        const response = await axios.post("http://localhost:8080/pay/newpayment",{ "buyer_email":email, "product_id":id, "amount":price, "quantity":data.quantity, "type":data.type, "card_no":data.card_no || 0, "UPI_ID":data.UPI_ID || "" })
+        const response = await axios.post(API_ENDPOINTS.NEW_PAYMENT,{ "buyer_email":email, "product_id":String(id), "amount":price, "quantity":data.quantity, "type":data.type, "card_no":data.card_no || 0, "UPI_ID":data.UPI_ID || "" })
         console.log(response.data)
     }
     const paymentMethod = watch("type");

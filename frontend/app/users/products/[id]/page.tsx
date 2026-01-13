@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Products } from '../new/page'
 import { ShoppingCart, Heart, Share2, Star, Truck, Shield, RotateCcw } from 'lucide-react'
+import { API_ENDPOINTS } from '@/lib/api'
 
 const page = () => {
     const { id } = useParams()
@@ -18,7 +19,7 @@ const page = () => {
 
     const fetchProductDetails = async () => {
         try {
-            const response = await axios.post(`http://localhost:8080/products/productdetails/${id}`)
+            const response = await axios.post(API_ENDPOINTS.PRODUCT_DETAILS(String(id)))
             setSingleproduct(response.data.ProductDetails[0])
         } catch (error) {
             console.error('Error fetching product:', error)
