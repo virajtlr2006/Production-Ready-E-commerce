@@ -158,7 +158,7 @@ const page = () => {
                                             <h3 className="text-lg font-semibold text-gray-900 line-clamp-2">{product.p_name}</h3>
                                             <div className="space-y-2">
                                                 <p className="text-sm text-gray-600">
-                                                    <span className="font-medium">Unit Price:</span> ${typeof product.amount === 'string' ? parseFloat(product.amount) : product.amount}
+                                                    <span className="font-medium">Unit Price:</span> ${product.amount ? (typeof product.amount === 'string' ? parseFloat(product.amount) : product.amount).toFixed(2) : '0.00'}
                                                 </p>
                                                 <p className="text-sm text-gray-600">
                                                     <span className="font-medium">Quantity:</span> <span className="text-orange-600 font-semibold">{quantity || 1}</span>
@@ -360,7 +360,7 @@ const page = () => {
                                     <div className="flex justify-between text-sm">
                                         <span className="text-gray-600">Unit Price</span>
                                         <span className="font-medium text-gray-900">
-                                            ${product ? (typeof product.amount === 'string' ? parseFloat(product.amount) : product.amount).toFixed(2) : '0.00'}
+                                            ${product && product.amount ? (typeof product.amount === 'string' ? parseFloat(product.amount) : product.amount).toFixed(2) : '0.00'}
                                         </span>
                                     </div>
                                     <div className="flex justify-between text-sm">
