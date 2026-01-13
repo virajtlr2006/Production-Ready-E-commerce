@@ -56,14 +56,14 @@ const page = () => {
                     </TableRow>
                 </TableHeader>
                 {allusers && allusers.map((users) =>
-                    <TableBody key={users.id}>
+                    <TableBody key={users.id || Math.random()}>
                         <TableRow>
                             <TableCell className="font-medium">{users.id}</TableCell>
                             <TableCell>{users.email}</TableCell>
                             <TableCell>{users.username}</TableCell>
                             <TableCell>{users.phone_no}</TableCell>
                             <TableCell>{users.password}</TableCell>
-                            <TableCell><Trash2 onClick={() => DeleteUser(users.id)}/></TableCell>
+                            <TableCell><Trash2 onClick={() => users.id && DeleteUser(users.id)}/></TableCell>
                         </TableRow>
                     </TableBody>
                 )}

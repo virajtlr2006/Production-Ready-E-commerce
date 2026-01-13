@@ -37,7 +37,7 @@ const page = () => {
       setAllProducts(products)
       
       // Extract unique categories
-      const uniqueCategories = ['All', ...new Set(products.map((p: Products) => p.category))]
+      const uniqueCategories: string[] = ['All', ...Array.from(new Set(products.map((p: Products) => p.category))) as string[]]
       setCategories(uniqueCategories)
       
       setError(null)
