@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { ShoppingCart, Zap, Heart, Truck, RotateCcw, Award, ChevronRight, Star, Tag } from "lucide-react"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import { useRouter } from "next/navigation"
 import { API_ENDPOINTS } from "@/lib/api"
 
 interface Product {
@@ -18,12 +19,21 @@ interface Product {
 }
 
 export default function Home() {
+  const router = useRouter()
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Redirect admin to admin dashboard
+    if (typeof window !== 'undefined') {
+      const isAdmin = localStorage.getItem('isadmin') === 'true'
+      if (isAdmin) {
+        router.push('/admin/products')
+        return
+      }
+    }
     fetchFeaturedProducts()
-  }, [])
+  }, [router])
 
   const fetchFeaturedProducts = async () => {
     try {
@@ -38,34 +48,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50">
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-orange-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-orange-500 bg-clip-text text-transparent">
-            ShopHub
-          </h1>
-          <div className="flex items-center gap-4">
-            <Link href="/users/products/all">
-              <Button variant="ghost" className="text-gray-700 hover:text-orange-600">
-                Browse Products
-              </Button>
-            </Link>
-            <Link href="/users/login">
-              <Button className="bg-orange-600 hover:bg-orange-700 text-white">
-                Login
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </nav>
-
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             <div className="space-y-4">
               <Badge className="bg-orange-100 text-orange-700 hover:bg-orange-100">
-                Welcome to ShopHub
+                Welcome to Our Store
               </Badge>
               <h2 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
                 Discover Amazing <span className="bg-gradient-to-r from-orange-600 to-orange-500 bg-clip-text text-transparent">Products</span>
@@ -95,7 +84,7 @@ export default function Home() {
               <div className="text-center space-y-4">
                 <ShoppingCart size={64} className="mx-auto text-orange-600" />
                 <h3 className="text-2xl font-bold text-gray-900">Premium Shopping</h3>
-                <p className="text-gray-600">Experience the best online shopping platform</p>
+                <p className="text-gray-600\">Experience quality products at great prices</p>
               </div>
             </div>
           </div>
@@ -222,7 +211,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div className="space-y-4">
-              <h3 className="text-xl font-bold text-orange-400">ShopHub</h3>
+              <h3 className="text-xl font-bold text-orange-400">E-Commerce Store</h3>
               <p className="text-gray-400">Your one-stop shop for quality products.</p>
             </div>
             <div className="space-y-3">
@@ -251,7 +240,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-gray-700 pt-8 text-center text-gray-400">
-            <p>&copy; 2026 ShopHub. All rights reserved.</p>
+            <p>&copy; 2026 E-Commerce Store. All rights reserved.</p>
           </div>
         </div>
       </footer>

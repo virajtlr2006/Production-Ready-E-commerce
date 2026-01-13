@@ -36,8 +36,9 @@ const page = () => {
                 "email": data.email,
                 "password": data.password,
             })
-            localStorage.setItem("email",data.email)
-            router.push("/")
+            localStorage.setItem("useremail", data.email)
+            localStorage.setItem("isadmin", "true")
+            router.push("/admin/products")
         } catch (error: any) {
             seterrormsg(error.response?.data?.message || "Login failed");          
         } finally {
