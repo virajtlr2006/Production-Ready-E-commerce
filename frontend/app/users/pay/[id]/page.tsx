@@ -104,10 +104,21 @@ const page = () => {
                 "UPI_ID": data.UPI_ID || ""
             })
             
-            setSuccessMessage('Order placed successfully!')
-            setTimeout(() => {
-                router.push('/users/products/userall')
-            }, 2000)
+            // Store order details for confirmation page
+            const orderData = {
+                invoice_no: response.data.invoice_no || Math.random().toString().substring(2, 12),
+                product_name: product?.p_name,
+                product_image: product?.image_url,
+                quantity: data.quantity,
+                amount: totalPrice,
+                payment_method: data.type,
+                buyer_email: email,
+                order_date: new Date().toISOString()
+            }
+            localStorage.setItem('lastOrder', JSON.stringify(orderData))
+            
+            // Redirect to order confirmation page
+            router.push('/users/pay/success')
         } catch (error: any) {
             setErrorMessage(error.response?.data?.message || 'Payment failed. Please try again.')
         } finally {
