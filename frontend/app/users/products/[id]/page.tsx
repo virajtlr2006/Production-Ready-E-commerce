@@ -32,6 +32,9 @@ const page = () => {
             <p>{singleproduct.p_name}</p>
             <p>{singleproduct.description}</p>
             <p>{singleproduct.price}</p>
+            <a href={`/users/pay/${singleproduct.id}`}>
+                <button className='border-2 bg-orange-400'>Buy</button>
+                </a>
         </div>
         }
     </div>
