@@ -78,27 +78,13 @@ const page = () => {
 
     // Function to approve a product
     const ApproveProduct = async (id:number) => {
-        try {
-            // Find the product to get owner's email
-            const product = allProducts?.find(p => p.id === id)
-            if (!product) {
-                console.error("Product not found")
-                return
-            }
+        await axios.post(API_ENDPOINTS.APPROVE_PRODUCT(id))
+        FetchAllProducts()
 
-            // Approve the product
-            await axios.post(API_ENDPOINTS.APPROVE_PRODUCT(id))
-            
-            // Refresh products list
-            FetchAllProducts()
-
-            // Fetch notification for the product owner
-            const notification = await axios.post(API_ENDPOINTS.Get_notification, {email: product.email})
-            console.log("Notification created:", notification.data)
-            
-        } catch (error) {
-            console.error("Error approving product:", error)
-        }
+        // const email = localStorage.getItem("useremail")
+        // // console.log(email)
+        // const notification = await axios.post(API_ENDPOINTS.Get_notification , {email})
+        // console.log(notification.data)
     }
 
     // Function to reject a product

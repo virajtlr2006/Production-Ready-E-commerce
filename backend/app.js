@@ -44,10 +44,10 @@ app.post("/notification", async (req, res) => {
     try {      
         const FetchNotifications = await db.select().from(NotificationTable).where(eq(NotificationTable.user_id,email))
     
-        // console.log(FetchNotifications)
+        console.log(FetchNotifications)
     
         res.status(200).json(
-            {"AllNotifs":FetchNotifications[0]}
+            {"AllNotifs":FetchNotifications}
         )
     } catch (error) {
         console.log(error)

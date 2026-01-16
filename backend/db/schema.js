@@ -48,7 +48,7 @@ export const PaymentTable = pgTable("payments", {
 
 
 export const NotificationTable = pgTable("notifications" , {
-  id: integer().notNull().generatedByDefaultAsIdentity(),
+  id: integer().primaryKey().generatedByDefaultAsIdentity(),
   user_id: varchar().notNull(),
   title: varchar().notNull(),
   message: varchar().notNull(),

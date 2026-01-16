@@ -136,7 +136,7 @@ router.post("/approveproduct/:id", async (req, res) => {
         // console.log(FetchProduct)
 
         const CreateNotification = await db.insert(NotificationTable).values({user_id: FetchProduct[0].email,title,message}).returning()
-        console.log(CreateNotification) 
+        // console.log(CreateNotification) 
 
     } catch (error) {
         // Handle errors and send error response

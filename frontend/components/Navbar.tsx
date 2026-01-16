@@ -2,11 +2,11 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { ShoppingBag, User, Package, LogOut, Home, Store, Shield, Users, CheckCircle } from 'lucide-react'
+import { ShoppingBag, User, Package, LogOut, Home, Store, Shield, Users, CheckCircle, Bell } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useEffect, useState } from 'react'
-import NotificationDropdown from './NotificationDropdown'
+
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -143,7 +143,16 @@ export default function Navbar() {
               <>
                 {!isAdmin && (
                   <>
-                    <NotificationDropdown />
+                    <Link href="/users/notifications">
+                      <Button
+                        variant={isActive('/users/notifications') ? 'default' : 'outline'}
+                        size="sm"
+                        className="gap-2"
+                      >
+                        <Bell className="h-4 w-4" />
+                        <span className="hidden sm:inline">Notifications</span>
+                      </Button>
+                    </Link>
                     <Link href="/users/profile">
                       <Button
                         variant={isActive('/users/profile') ? 'default' : 'outline'}
