@@ -48,6 +48,8 @@ const page = () => {
             const response = await axios.post(API_ENDPOINTS.USER_PRODUCTS, { email })
             // Set the fetched products to state
             setUserproducts(response.data.userproducts)
+
+            
         } catch (error: any) {
             // Log if any errors occurs
             setErrormsg(error.response?.data?.message || 'Failed to load products')

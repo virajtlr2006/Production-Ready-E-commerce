@@ -71,6 +71,7 @@ const page = () => {
             setTimeout(() => {
                 router.push("/users/products/userall")
             }, 1500)
+            
         } catch (error: any) {
             // Set error message from response
             setErrormsg(error.response?.data?.message || 'Failed to create product')

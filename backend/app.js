@@ -41,13 +41,18 @@ app.post("/notification", async (req, res) => {
 
     const {email} = req.body
 
-    const FetchNotifications = await db.select().from(NotificationTable).where(eq(NotificationTable.user_id,email))
+    try {      
+        const FetchNotifications = await db.select().from(NotificationTable).where(eq(NotificationTable.user_id,email))
+    
+        // console.log(FetchNotifications)
+    
+        res.status(200).json(
+            {"AllNotifs":FetchNotifications[0]}
+        )
+    } catch (error) {
+        console.log(error)
+    }
 
-    // console.log(FetchNotifications)
-
-    res.status(200).json(
-        {"AllNotifs":FetchNotifications[0]}
-    )
 })
 
 app.use("/admin", adminAuthRouter)

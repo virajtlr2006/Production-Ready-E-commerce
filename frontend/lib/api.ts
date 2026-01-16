@@ -29,7 +29,7 @@ export const API_ENDPOINTS = {
   DELETE_USER: (id: string | number) => `${API_BASE_URL}/admin/deleteuser/${id}`,
 
   //Notifications
-  Get_notification: `${API_BASE_URL}/notifications`
+  Get_notification: `${API_BASE_URL}/notification`,
 
 }
 

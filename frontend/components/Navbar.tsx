@@ -6,6 +6,7 @@ import { ShoppingBag, User, Package, LogOut, Home, Store, Shield, Users, CheckCi
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useEffect, useState } from 'react'
+import NotificationDropdown from './NotificationDropdown'
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -141,16 +142,19 @@ export default function Navbar() {
             {userEmail ? (
               <>
                 {!isAdmin && (
-                  <Link href="/users/profile">
-                    <Button
-                      variant={isActive('/users/profile') ? 'default' : 'outline'}
-                      size="sm"
-                      className="gap-2"
-                    >
-                      <User className="h-4 w-4" />
-                      <span className="hidden sm:inline">Profile</span>
-                    </Button>
-                  </Link>
+                  <>
+                    <NotificationDropdown />
+                    <Link href="/users/profile">
+                      <Button
+                        variant={isActive('/users/profile') ? 'default' : 'outline'}
+                        size="sm"
+                        className="gap-2"
+                      >
+                        <User className="h-4 w-4" />
+                        <span className="hidden sm:inline">Profile</span>
+                      </Button>
+                    </Link>
+                  </>
                 )}
                 <Button
                   variant="ghost"
