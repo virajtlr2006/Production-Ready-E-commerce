@@ -4,6 +4,9 @@ import userAuthRouter from "./routes/userRoutes.js"
 import productRouter from "./routes/productRoutes.js"
 import payRouter from "./routes/paymentRoutes.js"
 import cors from "cors"
+import { db } from "./index.js"
+import { NotificationTable } from "./db/schema.js"
+import { eq } from "drizzle-orm"
 
 const app = express()
 
@@ -14,26 +17,40 @@ app.use(cors())
 
 const port = 8080
 
-app.get("/",(req,res) => {
+app.get("/", (req, res) => {
     res.send("Hello World!")
 })
 
-app.listen(port, ()=> {
-    console.log(`Port is listening on port ${port}`)
-})
 
-app.post("/post",(req,res) => {
-    const {name,description} = req.body
+app.post("/post", (req, res) => {
+    const { name, description } = req.body
 
     res.json(
         {
-            "name":name,
-            "description":description
+            "name": name,
+            "description": description
         }
     )
 })
 
-app.use("/admin",adminAuthRouter)
-app.use("/users",userAuthRouter)
-app.use("/products",productRouter)
-app.use("/pay",payRouter)
+app.listen(port, () => {
+    console.log(`Port is listening on port ${port}`)
+})
+
+app.post("/notification", async (req, res) => {
+
+    const {email} = req.body
+
+    const FetchNotifications = await db.select().from(NotificationTable).where(eq(NotificationTable.user_id,email))
+
+    // console.log(FetchNotifications)
+
+    res.status(200).json(
+        {"AllNotifs":FetchNotifications[0]}
+    )
+})
+
+app.use("/admin", adminAuthRouter)
+app.use("/users", userAuthRouter)
+app.use("/products", productRouter)
+app.use("/pay", payRouter)

@@ -27,6 +27,10 @@ export const API_ENDPOINTS = {
   ADMIN_SIGNUP: `${API_BASE_URL}/admin/signup`,
   ADMIN_ALL_USERS: `${API_BASE_URL}/admin/allusers`,
   DELETE_USER: (id: string | number) => `${API_BASE_URL}/admin/deleteuser/${id}`,
+
+  //Notifications
+  Get_notification: `${API_BASE_URL}/notifications`
+
 }
 
 export default API_BASE_URL

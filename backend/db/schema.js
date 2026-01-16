@@ -45,3 +45,11 @@ export const PaymentTable = pgTable("payments", {
   card_no: bigint(),
   UPI_ID: varchar(),
 });
+
+
+export const NotificationTable = pgTable("notifications" , {
+  id: integer().notNull().generatedByDefaultAsIdentity(),
+  user_id: varchar().notNull(),
+  title: varchar().notNull(),
+  message: varchar().notNull(),
+})

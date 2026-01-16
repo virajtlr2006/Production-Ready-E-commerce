@@ -1,6 +1,6 @@
 import express from "express"
 import { db } from "../index.js"
-import { ProductTable, UserTable } from "../db/schema.js"
+import { NotificationTable, ProductTable, UserTable } from "../db/schema.js"
 import { eq } from "drizzle-orm"
 
 // Create a new router 
@@ -112,9 +112,16 @@ router.post("/editproduct/:id", async (req, res) => {
 
 // Approve Product
 router.post("/approveproduct/:id", async (req, res) => {
+
+    const title = "Product Approval"
+
+    const message = "Your Product is Approved and is live now"
+
     // Id from params
     const { id } = req.params
     // console.log(id)
+
+    // const {user_id} = req.body
 
     try {
         // Update product isApproved to true in the db where ID matches
@@ -124,6 +131,13 @@ router.post("/approveproduct/:id", async (req, res) => {
         res.status(200).json(
             { "message": "Product Approved" }
         )
+
+        const FetchProduct = await db.select().from(ProductTable).where(eq(ProductTable.id,Number(id)))
+        // console.log(FetchProduct)
+
+        const CreateNotification = await db.insert(NotificationTable).values({user_id: FetchProduct[0].email,title,message}).returning()
+        console.log(CreateNotification) 
+
     } catch (error) {
         // Handle errors and send error response
         res.status(400).json(
