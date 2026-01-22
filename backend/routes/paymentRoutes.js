@@ -1,6 +1,6 @@
 import express from "express"
 import { db } from "../index.js"
-import { PaymentTable, ProductTable } from "../db/schema.js"
+import { OrderTable, PaymentTable, ProductTable } from "../db/schema.js"
 import { eq } from "drizzle-orm"
 
 const router = express.Router()
@@ -40,6 +40,13 @@ router.post("/newpayment", async (req, res) => {
     try {
         // Insert new payment into the database
         const NewPayment = await db.insert(PaymentTable).values({ buyer_email, product_id, amount, quantity, type, card_no, UPI_ID }).returning()
+        // console.log(NewPayment[0])
+
+        // Insert details of order Into Order Table
+        const order = {"invoice_no":NewPayment[0].invoice_no,"user_id":buyer_email ,"product_id":product_id}
+        // console.log(order)
+        const CreateOrder = await db.insert(OrderTable).values(order).returning()
+        // console.log(CreateOrder)
 
         const newstock = FetchProduct[0].stock - quantity
         const UpdateStock = await db.update(ProductTable).set({stock:newstock}).where(eq(ProductTable.id,product_id))

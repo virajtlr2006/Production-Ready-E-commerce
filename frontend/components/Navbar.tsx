@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { ShoppingBag, User, Package, LogOut, Home, Store, Shield, Users, CheckCircle, Bell } from 'lucide-react'
+import { ShoppingBag, User, Package, LogOut, Home, Store, Shield, Users, CheckCircle, Bell, ShoppingCart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useEffect, useState } from 'react'
@@ -87,6 +87,16 @@ export default function Navbar() {
                     Users
                   </Button>
                 </Link>
+                <Link href="/admin/allorders">
+                  <Button
+                    variant={isActive('/admin/allorders') ? 'default' : 'ghost'}
+                    size="sm"
+                    className="gap-2"
+                  >
+                    <ShoppingCart className="h-4 w-4" />
+                    Orders
+                  </Button>
+                </Link>
               </>
             ) : (
               <>
@@ -121,6 +131,16 @@ export default function Navbar() {
                       >
                         <Package className="h-4 w-4" />
                         My Products
+                      </Button>
+                    </Link>
+                    <Link href="/users/orders/myorders">
+                      <Button
+                        variant={isActive('/users/orders/myorders') ? 'default' : 'ghost'}
+                        size="sm"
+                        className="gap-2"
+                      >
+                        <ShoppingCart className="h-4 w-4" />
+                        My Orders
                       </Button>
                     </Link>
                     <Link href="/users/products/new">
@@ -217,6 +237,16 @@ export default function Navbar() {
                   Users
                 </Button>
               </Link>
+              <Link href="/admin/allorders">
+                <Button
+                  variant={isActive('/admin/allorders') ? 'default' : 'ghost'}
+                  size="sm"
+                  className="gap-2"
+                >
+                  <ShoppingCart className="h-4 w-4" />
+                  Orders
+                </Button>
+              </Link>
             </>
           ) : (
             <>
@@ -250,6 +280,16 @@ export default function Navbar() {
                     >
                       <Package className="h-4 w-4" />
                       My Products
+                    </Button>
+                  </Link>
+                  <Link href="/users/myorders">
+                    <Button
+                      variant={isActive('/users/myorders') ? 'default' : 'ghost'}
+                      size="sm"
+                      className="gap-2"
+                    >
+                      <ShoppingCart className="h-4 w-4" />
+                      Orders
                     </Button>
                   </Link>
                   <Link href="/users/products/new">

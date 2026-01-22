@@ -1,5 +1,5 @@
 import express from "express"
-import { adminTable, UserTable } from "../db/schema.js"
+import { adminTable, OrderTable, UserTable } from "../db/schema.js"
 import { db } from "../index.js"
 import { eq } from "drizzle-orm"
 import { Check } from "drizzle-orm/gel-core"
@@ -149,6 +149,30 @@ router.delete("/deleteuser/:id", async (req, res) => {
         // If unexpected error occurs
         res.status(400).json(
             { "message": "Error Occured" }
+        )
+    }
+})
+
+// Order list for admin
+router.get("/orderlist", async (req, res) => {
+
+    try {     
+        const FetchAllOrders = await db.select().from(OrderTable)
+        // console.log(FetchAllOrders)
+
+        if(FetchAllOrders.length > 0){
+            res.status(200).json(
+                {"AllOrders" : FetchAllOrders}
+            )
+        }
+        else{
+            res.status(400).json(
+                {"message":"No orders yet"}
+            )
+        }
+    } catch (error) {
+        res.status(400).json(
+            {"message":"Error Ocuured"}
         )
     }
 })

@@ -1,6 +1,6 @@
 import express from "express"
 import { db } from "../index.js"
-import { ProductTable, UserTable } from "../db/schema.js"
+import { OrderTable, ProductTable, UserTable } from "../db/schema.js"
 import { eq } from "drizzle-orm"
 
 const router = express.Router()
@@ -237,9 +237,60 @@ router.post("/userproducts", async (req, res) => {
     } catch (error) {
         // If unexpected error occured then send this response
         req.status.json(
-            {"message":"Unexpected Error Occured...Please try again"}
+            { "message": "Unexpected Error Occured...Please try again" }
         )
     }
+})
+
+// User All Orders
+
+router.post("/userallOrders", async (req, res) => {
+    const { email } = req.body
+    try {
+        const UserOrders = await db.select().from(OrderTable).where(eq(OrderTable.user_id, email))
+        // console.log(UserOrders)
+
+        if (UserOrders.length > 0) {
+            res.status(200).json(
+                { "UserOrders": UserOrders }
+            )
+        }
+        else {
+            req.status(400).json(
+                { "message": "No Orders Yet" }
+            )
+        }
+    } catch (error) {
+        req.status(400).json(
+            {"message" : "Error Occured"}
+        )
+    }
+})
+
+// Order Details , with product details and payment details
+router.post("/orders/:order_id" , async (req,res) => {
+    // console.log(product_id)
+    const {order_id} = req.params
+    // console.log(order_id)
+    
+    const OrderDetail = await db.select().from(OrderTable).where(eq(OrderTable.order_id,order_id))
+    console.log(OrderDetail)
+
+    const productDetail =  await db.select().from(ProductTable).where(eq(ProductTable.id,OrderDetail[0].product_id))
+    console.log(productDetail[0])
+
+    res.status(200).json(
+        {
+            order_id: OrderDetail[0].order_id,
+            user_id: OrderDetail[0].user_id,
+            p_name: productDetail[0].p_name,
+            category: productDetail[0].category,
+            description: productDetail[0].description,
+            price: productDetail[0].price,
+            image: productDetail[0].image_url,
+            status: OrderDetail[0].status,
+            }
+    )
 })
 
 export default router

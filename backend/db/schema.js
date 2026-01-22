@@ -46,7 +46,16 @@ export const PaymentTable = pgTable("payments", {
   UPI_ID: varchar(),
 });
 
+// Order Table
+export const OrderTable = pgTable("orders", {
+  order_id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  invoice_no: integer().notNull(),
+  user_id: varchar().notNull(),
+  product_id: integer().notNull(),
+  status: varchar().default("Pending"),
+});
 
+// Notification Table
 export const NotificationTable = pgTable("notifications" , {
   id: integer().primaryKey().generatedByDefaultAsIdentity(),
   user_id: varchar().notNull(),

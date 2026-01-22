@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'
+const API_BASE_URL = 'http://localhost:8080' || process.env.NEXT_PUBLIC_API_URL
 
 export const API_ENDPOINTS = {
   // User Auth
@@ -30,6 +30,9 @@ export const API_ENDPOINTS = {
 
   //Notifications
   Get_notification: `${API_BASE_URL}/notification`,
+
+  // Order list for admin
+  ORDER_LIST: `${API_BASE_URL}/admin/orderlist`,
 
 }
 
