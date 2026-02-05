@@ -46,6 +46,7 @@ router.get("/allproducts", async (req, res) => {
         // Check if products are found and send response
         if (allProducts.length > 0) {
             // Send response with products
+            console.log(allProducts)
             res.status(200).json(
                 { "Allproducts": allProducts }
             )
